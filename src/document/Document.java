@@ -155,8 +155,8 @@ public abstract class Document {
 		int numWords = getNumWords();
 		int numSentences = getNumSentences();
 		int numSyllables = getNumSyllables();
-		double numWordsDivNumSentences = numSentences == 0 ? 0 : ((double)numWords)/numSentences;
-		double numSyllablesDivNumWords = numWords == 0 ? 0 : ((double)numSyllables)/numWords;
+		double numWordsDivNumSentences = numSentences == 0 ? 0 : ((double) numWords) / numSentences;
+		double numSyllablesDivNumWords = numWords == 0 ? 0 : ((double) numSyllables) / numWords;
 	    return 206.835 - 1.015 * numWordsDivNumSentences - 84.6 * numSyllablesDivNumWords;
 	}
 }
