@@ -102,6 +102,8 @@ public abstract class Document {
 		int syllFound = doc.getNumSyllables();
 		int wordsFound = doc.getNumWords();
 		int sentFound = doc.getNumSentences();
+		double fleschScore = doc.getFleschScore();
+		System.out.println(fleschScore);
 		if (syllFound != syllables) {
 			System.out.println("\nIncorrect number of syllables.  Found " + syllFound 
 					+ ", expected " + syllables);
@@ -143,14 +145,18 @@ public abstract class Document {
 		return this.text;
 	}
 	
-	/** return the Flesch readability score of this document */
+	/** A method for calculating the Flesch readability score of this document
+	 * @return Flesch Score based on the mathematical formula
+	 * */
 	public double getFleschScore()
 	{
 	    // TODO: You will play with this method in week 1, and 
 		// then implement it in week 2
-	    return 0.0;
+		int numWords = getNumWords();
+		int numSentences = getNumSentences();
+		int numSyllables = getNumSyllables();
+		double numWordsDivNumSentences = numSentences == 0 ? 0 : ((double)numWords)/numSentences;
+		double numSyllablesDivNumWords = numWords == 0 ? 0 : ((double)numSyllables)/numWords;
+	    return 206.835 - 1.015 * numWordsDivNumSentences - 84.6 * numSyllablesDivNumWords;
 	}
-	
-	
-	
 }
