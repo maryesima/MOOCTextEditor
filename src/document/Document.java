@@ -68,13 +68,13 @@ public abstract class Document {
 	    // EfficientDocument (module 3)
 		int numSyllables = 0;
 		boolean isPrevCharVowel = false;
-		Set<String> vowels = new HashSet<>(Arrays.asList("a", "e", "i", "o", "u", "y"));
+		Set<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'y'));
 		for (int i = 0; i < word.length(); i++) {
-			String c = word.toLowerCase().substring(i, i+1);
+			char c = word.toLowerCase().charAt(i);
 			if (vowels.contains(c)) {
 				if (!isPrevCharVowel) {
 					numSyllables++;
-					if (i == word.length() - 1 && c.equals("e") && numSyllables > 1) {
+					if (i == word.length() - 1 && c == 'e' && numSyllables > 1) {
 						numSyllables--;
 					}
 				}
