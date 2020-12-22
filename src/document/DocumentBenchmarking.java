@@ -15,14 +15,14 @@ public class DocumentBenchmarking {
 
     // Run each test more than once to get bigger numbers and less noise.
     // You can try playing around with this number.
-    int trials = 100;
+    int trials = 1;
 
     // The text to test on
     String textfile = "data/warAndPeace.txt";
 
     // The amount of characters to increment each step
     // You can play around with this
-    int increment = 20000;
+    int increment = 5000;
 
     // The number of steps to run.
     // You can play around with this.
@@ -30,9 +30,8 @@ public class DocumentBenchmarking {
 
     // THe number of characters to start with.
     // You can play around with this.
-    int start = 50000;
+    int start = 5000;
 
-    // TODO: Fill in the rest of this method so that it runs two loops
     // and prints out timing results as described in the assignment
     // instructions and following the pseudocode below.
     for (int numToCheck = start;
