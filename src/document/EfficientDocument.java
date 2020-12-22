@@ -76,7 +76,6 @@ public class EfficientDocument extends Document {
    */
   @Override
   public int getNumSentences() {
-    // TODO: write this method.  Hint: It's simple
     return numSentences;
   }
 
