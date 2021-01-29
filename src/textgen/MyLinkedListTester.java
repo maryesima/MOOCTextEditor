@@ -99,7 +99,11 @@ public class MyLinkedListTester {
       fail("Check out of bounds");
     } catch (IndexOutOfBoundsException e) {
     }
-  }
+    try {
+      list1.remove(2);
+    } catch (IndexOutOfBoundsException e) {
+    }
+    }
 
   /** Test adding an element into the end of the list, specifically public boolean add(E element) */
   @Test
@@ -129,7 +133,7 @@ public class MyLinkedListTester {
   @Test
   public void testAddAtIndex() {
     list1.add(1, 5);
-    assertEquals("Add at Index: check element 2 is correct", (Integer) 5, list1.get(2));
+    assertEquals("Add at Index: check element 1 is correct", (Integer) 5, list1.get(1));
     try {
       list1.add(-1, 5);
       fail("Check out of bounds");
@@ -139,6 +143,11 @@ public class MyLinkedListTester {
       list1.add(10, 5);
       fail("Check out of bounds");
     } catch (IndexOutOfBoundsException e) {
+    }
+    try {
+      list1.add(2, null);
+      fail("Check null pointer exception");
+    } catch (NullPointerException e) {
     }
   }
 

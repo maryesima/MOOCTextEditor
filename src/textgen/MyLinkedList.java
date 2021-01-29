@@ -56,7 +56,10 @@ public class MyLinkedList<E> extends AbstractList<E> {
   public void add(int index, E element) {
     if (size < index || index < 0) {
       throw new IndexOutOfBoundsException(
-          String.format("Index must be between 0 and %s but is %s", size - 1, index));
+          String.format("Index must be between 0 and %s but is %s", size, index));
+    }
+    if (element == null) {
+      throw new NullPointerException(String.format("The element is null"));
     }
     LLNode new_node = new LLNode(element);
     if (head == null) {
@@ -71,7 +74,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
       tail = new_node;
     } else {
       LLNode node = head;
-      for (int i = 0; i < index; i++) {
+      for (int i = 0; i < index - 1; i++) {
         node = node.next;
       }
       LLNode next_node = node.next;
@@ -116,7 +119,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
       }
       LLNode next_node = node_to_remove.next;
       LLNode prev_node = node_to_remove.prev;
-      next_node.prev = node_to_remove.prev;
+      next_node.prev = prev_node;
       prev_node.next = next_node;
     }
     size--;
@@ -135,6 +138,9 @@ public class MyLinkedList<E> extends AbstractList<E> {
     if (size <= index || index < 0) {
       throw new IndexOutOfBoundsException(
           String.format("Index must be between 0 and %s but is %s", size - 1, index));
+    }
+    if (element == null) {
+      throw new NullPointerException(String.format("The element cannot be null"));
     }
     LLNode node = head;
     for (int i = 0; i < index; i++) {
