@@ -33,9 +33,8 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 			return;
 		}
 		String[] words = sourceText.split(" ");
-		String starter = words[0];
-		String prevWord = starter;
-        for (int i = 1; i < words.length; i++) {
+		starter = words[0];
+		for (int i = 1; i < words.length; i++) {
 			addWordPair(words[i-1], words[i]);
 		}
         addWordPair(words[words.length-1], words[0]);
@@ -53,22 +52,27 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 		}
 	}
 
+  /** Generate the number of words requested. */
+  @Override
+  public String generateText(int numWords) {
+    try {
+      if (numWords == 0) return "";
+      String currWord = starter;
+      String output = "";
+      output += currWord;
+      for (int i = 0; i < numWords - 1; i++) {
+        ListNode currWordNode = getNode(currWord);
+        String randomWord = currWordNode.getRandomNextWord(rnGenerator);
+        output += " " + randomWord;
+        currWord = randomWord;
+      }
+      return output;
+    } catch (Exception e) {
+      System.out.println("Empty File");
+    }
+    return "";
+    }
 
-	/** 
-	 * Generate the number of words requested.
-	 */
-	@Override
-	public String generateText(int numWords) {
-		String currWord = starter;
-		String output = "";
-        for (int i = 0; i < numWords; i++) {
-        	ListNode currWordNode = getNode(currWord);
-			String randomWord = currWordNode.getRandomNextWord(rnGenerator);
-			output += " " + randomWord;
-			currWord = randomWord;
-		}
-		return output;
-	}
 
 	private ListNode getNode(String currWord)
 	{
@@ -97,16 +101,9 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	@Override
 	public void retrain(String sourceText)
 	{
-		if (sourceText.isEmpty()) {
-			return;
-		}
-		String[] words = sourceText.split(" ");
-		String starter = words[0];
-		String prevWord = starter;
-		for (int i = 1; i < words.length; i++) {
-			addWordPair(words[i-1], words[i]);
-		}
-		addWordPair(words[words.length-1], words[0]);
+		wordList = new LinkedList<ListNode>();
+		starter = "";
+        train(sourceText);
 	}
 
 	
