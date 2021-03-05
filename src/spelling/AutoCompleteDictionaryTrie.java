@@ -1,10 +1,7 @@
 package spelling;
 
-import java.util.List;
-import java.util.Set;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
+
+import java.util.*;
 
 /** 
  * An trie data structure that implements the Dictionary and the AutoComplete ADT
@@ -39,8 +36,23 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 */
 	public boolean addWord(String word)
 	{
-	    //TODO: Implement this method.
-	    return false;
+		TrieNode currentWord = root;
+		char[] wordToLetters = word.toLowerCase().toCharArray();
+		for (int i = 0; i < word.length(); i++) {
+		  TrieNode nextWord = currentWord.insert(wordToLetters[i]);
+		  if (nextWord != null) {
+		  	currentWord = nextWord;
+		  }
+		  else {
+		  	currentWord = currentWord.getChild(wordToLetters[i]);
+		  }
+		}
+		if (!currentWord.endsWord()) {
+			size++;
+			currentWord.setEndsWord(true);
+			return true;
+		}
+		return false;
 	}
 	
 	/** 
@@ -49,18 +61,26 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 */
 	public int size()
 	{
-	    //TODO: Implement this method
-	    return 0;
+	    return size;
 	}
 	
 	
 	/** Returns whether the string is a word in the trie, using the algorithm
 	 * described in the videos for this week. */
 	@Override
-	public boolean isWord(String s) 
-	{
-	    // TODO: Implement this method
-		return false;
+	public boolean isWord(String s) {
+		if (s == null) {
+			return false;
+		}
+		TrieNode currentWord = root;
+		char[] wordToLetters = s.toLowerCase().toCharArray();
+		for (int i = 0; i < s.length(); i++) {
+			currentWord = currentWord.getChild(wordToLetters[i]);
+			if (currentWord == null) {
+				return false;
+			}
+		}
+		return currentWord.endsWord();
 	}
 
 	/** 
@@ -100,8 +120,28 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
     	 //       If it is a word, add it to the completions list
     	 //       Add all of its child nodes to the back of the queue
     	 // Return the list of completions
-    	 
-         return null;
+         List<String> completions = new LinkedList();
+         //looking for completions
+		 char[] pre = prefix.toLowerCase().toCharArray();
+		 TrieNode node = root;
+         for (int i = 0; i < pre.length; i++) {
+			 node = node.getChild(pre[i]);
+			 if (node == null) {
+			 	return completions;
+			 }
+		 }
+		 LinkedList queue = new LinkedList();
+         queue.add(node);
+         while (!queue.isEmpty() && numCompletions > completions.size()) {
+         	TrieNode checkWord  = (TrieNode) queue.removeFirst();
+         	if (checkWord.endsWord()) {
+         		completions.add(checkWord.getText());
+			}
+         	for (Character c : checkWord.getValidNextCharacters()) {
+         		queue.add(checkWord.getChild(c));
+			}
+		 }
+         return completions;
      }
 
  	// For debugging
