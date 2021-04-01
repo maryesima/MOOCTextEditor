@@ -17,7 +17,7 @@ public class NearbyWords implements SpellingSuggest {
 	// THRESHOLD to determine how many words to look through when looking
 	// for spelling suggestions (stops prohibitively long searching)
 	// For use in the Optional Optimization in Part 2.
-	private static final int THRESHOLD = 1000; 
+	private static final int THRESHOLD = 1000;
 
 	Dictionary dict;
 
@@ -76,7 +76,16 @@ public class NearbyWords implements SpellingSuggest {
 	 * @return
 	 */
 	public void insertions(String s, List<String> currentList, boolean wordsOnly ) {
-		// TODO: Implement this method  
+        for(int index = 0; index < s.length()+ 1; index++) {
+        	for(int charCode = (int)'a'; charCode <= (int)'z'; charCode++) {
+        		StringBuffer sb = new StringBuffer(s);
+				sb.insert(index, (char)charCode);
+				String newString = sb.toString();
+				if(!currentList.contains(newString) && (!wordsOnly||dict.isWord(newString))) {
+					currentList.add(newString);
+				}
+			}
+		}
 	}
 
 	/** Add to the currentList Strings that are one character deletion away
@@ -87,7 +96,16 @@ public class NearbyWords implements SpellingSuggest {
 	 * @return
 	 */
 	public void deletions(String s, List<String> currentList, boolean wordsOnly ) {
-		// TODO: Implement this method
+        for(int index = 0; index < s.length(); index++) {
+        	for(int charCode = (int)'a'; charCode <= (int)'z'; charCode++) {
+        		StringBuffer sb = new StringBuffer(s);
+				sb.deleteCharAt(index);
+				String newString = sb.toString();
+                if(!currentList.contains(newString) && (!wordsOnly||dict.isWord(newString))) {
+                	currentList.add(newString);
+				}
+			}
+		}
 	}
 
 	/** Add to the currentList Strings that are one character deletion away
@@ -110,10 +128,22 @@ public class NearbyWords implements SpellingSuggest {
 		queue.add(word);
 		visited.add(word);
 					
-		// TODO: Implement the remainder of this method, see assignment for algorithm
-		
+		while(!queue.isEmpty() && retList.size() < numSuggestions){
+			//remove the word from the start of the queue and assign to curr
+            String curr = queue.remove(0);
+			//get a list of neighbors (strings one mutation away from curr)
+			List<String> neighbors = distanceOne(curr, true);
+			for(String neighbor : neighbors){
+				if(!visited.contains(neighbor)) {
+					visited.add(neighbor);
+					queue.add(neighbor);
+					if(dict.isWord(neighbor)){
+						retList.add(neighbor);
+					}
+				}
+			}
+		}
 		return retList;
-
 	}	
 
    public static void main(String[] args) {
