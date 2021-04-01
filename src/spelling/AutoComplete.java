@@ -1,14 +1,9 @@
-/**
- * 
- */
+/** */
 package spelling;
 
 import java.util.List;
 
-/**
- * @author Christine
- *
- */
+/** @author Christine */
 public interface AutoComplete {
-	public List<String> predictCompletions(String prefix, int numCompletions);
+  public List<String> predictCompletions(String prefix, int numCompletions);
 }
