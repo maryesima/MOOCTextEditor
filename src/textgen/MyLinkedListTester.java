@@ -154,7 +154,6 @@ public class MyLinkedListTester {
   /** Test setting an element in the list */
   @Test
   public void testSet() {
-    // TODO: implement this test
     list1.set(1, 5);
     list1.set(0, 10);
     assertEquals("Set: Check element 1 is correct", (Integer) 5, list1.get(1));

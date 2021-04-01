@@ -3,16 +3,19 @@ package spelling;
 
 import java.util.*;
 
-/** 
+/**
  * An trie data structure that implements the Dictionary and the AutoComplete ADT
- * @author You
  *
+ * @author You
  */
-public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
+public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 
-    private TrieNode root;
-    private int size;
-    
+  private TrieNode root;
+  private int size;
+
+  public AutoCompleteDictionaryTrie() {
+    root = new TrieNode();
+  }
 
     public AutoCompleteDictionaryTrie()
 	{
@@ -144,27 +147,21 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
          return completions;
      }
 
- 	// For debugging
- 	public void printTree()
- 	{
- 		printNode(root);
- 	}
- 	
- 	/** Do a pre-order traversal from this node down */
- 	public void printNode(TrieNode curr)
- 	{
- 		if (curr == null) 
- 			return;
- 		
- 		System.out.println(curr.getText());
- 		
- 		TrieNode next = null;
- 		for (Character c : curr.getValidNextCharacters()) {
- 			next = curr.getChild(c);
- 			printNode(next);
- 		}
- 	}
- 	
+  // For debugging
+  public void printTree() {
+    printNode(root);
+  }
 
-	
+  /** Do a pre-order traversal from this node down */
+  public void printNode(TrieNode curr) {
+    if (curr == null) return;
+
+    System.out.println(curr.getText());
+
+    TrieNode next = null;
+    for (Character c : curr.getValidNextCharacters()) {
+      next = curr.getChild(c);
+      printNode(next);
+    }
+  }
 }
