@@ -32,11 +32,12 @@ public class BasicDocument extends Document
 	 * @return The number of words in the document.
 	 */
 	@Override
-	public int getNumWords()
-	{
-		//TODO: Implement this method in week 2 according to the comments above.  
-		// See the Module 2 support videos if you need help.
-	    return 0;
+	public int getNumWords() {
+		if (getText().isEmpty()) {
+			return 0;
+		}
+		String[] text = getText().split("[.!?, '^0-9]+");
+		return text.length;
 	}
 	
 	/**
@@ -52,11 +53,12 @@ public class BasicDocument extends Document
 	 * @return The number of sentences in the document.
 	 */
 	@Override
-	public int getNumSentences()
-	{
-	    //TODO: Implement this method.  See the Module 2 support videos 
-        // if you need help.
-        return 0;
+	public int getNumSentences() {
+	    if (getText().isEmpty()) {
+	        return 0;
+        }
+	    String[] text = getText().split("[.!?]+");
+        return text.length;
 	}
 	
 	/**
@@ -74,14 +76,20 @@ public class BasicDocument extends Document
 	 * @return The number of syllables in the document.
 	 */
 	@Override
-	public int getNumSyllables()
-	{
-	    //TODO: Implement this method in week 2.  See the Module 2 support videos 
-        // if you need help.  And note that there is no need to use a regular
+	public int getNumSyllables() {
+		//TODO: Implement this method in week 2.  See the Module 2 support videos
+		// if you need help.  And note that there is no need to use a regular
 		// expression for the syllable counting.  We recommend you implement 
 		// the helper function countSyllables in Document.java using a loop, 
 		// and then call it here on each word.
-        return 0;
+		String[] words = getText().split("[.!?, :)('^0-9]+");
+		int numWords = getNumWords();
+		int totalSyllables = 0;
+		for (int i = 0; i < numWords; i++) {
+			int syllables = countSyllables(words[i]);
+			totalSyllables += syllables;
+		}
+		return totalSyllables;
 	}
 	
 	

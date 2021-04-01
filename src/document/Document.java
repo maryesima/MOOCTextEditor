@@ -4,8 +4,7 @@ package document;
  * A class that represents a text document
  * @author UC San Diego Intermediate Programming MOOC team
  */
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,8 +65,25 @@ public abstract class Document {
 	{
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 2) and 
-	    // EfficientDocument (module 3).
-	    return 0;
+	    // EfficientDocument (module 3)
+		int numSyllables = 0;
+		boolean isPrevCharVowel = false;
+		Set<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'y'));
+		for (int i = 0; i < word.length(); i++) {
+			char c = word.toLowerCase().charAt(i);
+			if (vowels.contains(c)) {
+				if (!isPrevCharVowel) {
+					numSyllables++;
+					if (i == word.length() - 1 && c == 'e' && numSyllables > 1) {
+						numSyllables--;
+					}
+				}
+				isPrevCharVowel = true;
+			} else {
+				isPrevCharVowel = false;
+			}
+		}
+		return numSyllables;
 	}
 	
 	/** A method for testing
