@@ -2,12 +2,14 @@ package textgen;
 
 import java.util.*;
 
-/** 
+/**
  * An implementation of the MTG interface that uses a list of lists.
- * @author UC San Diego Intermediate Programming MOOC team 
+ *
+ * @author UC San Diego Intermediate Programming MOOC team
  */
 public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 
+  
 	// The list of words with their next words
 	private List<ListNode> wordList; 
 	
@@ -149,9 +151,7 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 		System.out.println(gen);
 		System.out.println(gen.generateText(20));
 	}
-
 }
-
 /** Links a word to the next words in the list 
  * You should use this class in your implementation. */
 class ListNode
@@ -193,7 +193,4 @@ class ListNode
 		toReturn += "\n";
 		return toReturn;
 	}
-	
 }
-
-
