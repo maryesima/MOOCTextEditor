@@ -94,21 +94,36 @@ public class MyLinkedListTester {
     assertEquals("Remove: check a is correct ", 65, a);
     assertEquals("Remove: check element 0 is correct ", (Integer) 21, list1.get(0));
     assertEquals("Remove: check size is correct ", 2, list1.size());
-
-    // TODO: Add more tests here
-  }
+    try {
+      list1.remove(-1);
+      fail("Check out of bounds");
+    } catch (IndexOutOfBoundsException e) {
+    }
+    try {
+      list1.remove(2);
+    } catch (IndexOutOfBoundsException e) {
+    }
+    }
 
   /** Test adding an element into the end of the list, specifically public boolean add(E element) */
   @Test
   public void testAddEnd() {
-    // TODO: implement this test
-
+    list1.add(list1.size(), 4);
+    assertEquals("Add Edd: check element 4 is correct", 3, list1.indexOf(4));
+    try {
+      list1.add(-1, 3);
+      fail("Check out of bounds");
+    } catch (IndexOutOfBoundsException e) {
+    }
   }
 
   /** Test the size of the list */
   @Test
   public void testSize() {
-    // TODO: implement this test
+    assertEquals("Size: check size is correct", 3, list1.size());
+    assertEquals("Size: check size is correct", 2, shortList.size());
+    assertEquals("Size: check size is correct", 0, emptyList.size());
+    assertEquals("Size: check size is correct", 10, longerList.size());
   }
 
   /**
@@ -117,17 +132,41 @@ public class MyLinkedListTester {
    */
   @Test
   public void testAddAtIndex() {
-    // TODO: implement this test
-
+    list1.add(1, 5);
+    assertEquals("Add at Index: check element 1 is correct", (Integer) 5, list1.get(1));
+    try {
+      list1.add(-1, 5);
+      fail("Check out of bounds");
+    } catch (IndexOutOfBoundsException e) {
+    }
+    try {
+      list1.add(10, 5);
+      fail("Check out of bounds");
+    } catch (IndexOutOfBoundsException e) {
+    }
+    try {
+      list1.add(2, null);
+      fail("Check null pointer exception");
+    } catch (NullPointerException e) {
+    }
   }
 
   /** Test setting an element in the list */
   @Test
   public void testSet() {
-    // TODO: implement this test
-
+    list1.set(1, 5);
+    list1.set(0, 10);
+    assertEquals("Set: Check element 1 is correct", (Integer) 5, list1.get(1));
+    assertEquals("Set: Check element 0 is correct", (Integer) 10, list1.get(0));
+    try {
+      list1.set(-1, 10);
+      fail("Check out of bounds");
+    } catch (IndexOutOfBoundsException e) {
+    }
+    try {
+      list1.set(10, 20);
+      fail("Check out of bounds");
+    } catch (IndexOutOfBoundsException e) {
+    }
   }
-
-  // TODO: Optionally add more test methods.
-
 }

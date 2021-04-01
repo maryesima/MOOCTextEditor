@@ -15,7 +15,9 @@ public class MyLinkedList<E> extends AbstractList<E> {
 
   /** Create a new empty LinkedList */
   public MyLinkedList() {
-    // TODO: Implement this method
+    head = null;
+    tail = null;
+    size = 0;
   }
 
   /**
@@ -24,8 +26,8 @@ public class MyLinkedList<E> extends AbstractList<E> {
    * @param element The element to add
    */
   public boolean add(E element) {
-    // TODO: Implement this method
-    return false;
+    add(size, element);
+    return true;
   }
 
   /**
@@ -34,8 +36,15 @@ public class MyLinkedList<E> extends AbstractList<E> {
    * @throws IndexOutOfBoundsException if the index is out of bounds.
    */
   public E get(int index) {
-    // TODO: Implement this method.
-    return null;
+    if (size <= index || index < 0) {
+      throw new IndexOutOfBoundsException(
+          String.format("Index must be between 0 and %s but is %s", size - 1, index));
+    }
+    LLNode node = head;
+    for (int i = 0; i < index; i++) {
+      node = node.next;
+    }
+    return (E) node.data;
   }
 
   /**
@@ -45,13 +54,41 @@ public class MyLinkedList<E> extends AbstractList<E> {
    * @param element The element to add
    */
   public void add(int index, E element) {
-    // TODO: Implement this method
+    if (size < index || index < 0) {
+      throw new IndexOutOfBoundsException(
+          String.format("Index must be between 0 and %s but is %s", size, index));
+    }
+    if (element == null) {
+      throw new NullPointerException(String.format("The element is null"));
+    }
+    LLNode new_node = new LLNode(element);
+    if (head == null) {
+      head = tail = new_node;
+    } else if (index == 0) {
+      new_node.next = head;
+      head.prev = new_node;
+      head = new_node;
+    } else if (index == size) {
+      new_node.prev = tail;
+      tail.next = new_node;
+      tail = new_node;
+    } else {
+      LLNode node = head;
+      for (int i = 0; i < index - 1; i++) {
+        node = node.next;
+      }
+      LLNode next_node = node.next;
+      node.next = new_node;
+      new_node.prev = node;
+      next_node.prev = new_node;
+      new_node.next = next_node;
+    }
+    size++;
   }
 
   /** Return the size of the list */
   public int size() {
-    // TODO: Implement this method
-    return -1;
+    return size;
   }
 
   /**
@@ -62,8 +99,31 @@ public class MyLinkedList<E> extends AbstractList<E> {
    * @throws IndexOutOfBoundsException If index is outside the bounds of the list
    */
   public E remove(int index) {
-    // TODO: Implement this method
-    return null;
+    if (size <= index || index < 0) {
+      throw new IndexOutOfBoundsException(
+          String.format("Index must be between 0 and %s but is %s", size - 1, index));
+    }
+    LLNode node_to_remove = head;
+    if (size == 1) {
+      head = tail = null;
+    } else if (index == 0) {
+      head = node_to_remove.next;
+      head.prev = null;
+    } else if (index == size - 1) {
+      node_to_remove = tail;
+      tail = node_to_remove.prev;
+      tail.next = null;
+    } else {
+      for (int i = 0; i < index; i++) {
+        node_to_remove = node_to_remove.next;
+      }
+      LLNode next_node = node_to_remove.next;
+      LLNode prev_node = node_to_remove.prev;
+      next_node.prev = prev_node;
+      prev_node.next = next_node;
+    }
+    size--;
+    return (E) node_to_remove.data;
   }
 
   /**
@@ -75,8 +135,20 @@ public class MyLinkedList<E> extends AbstractList<E> {
    * @throws IndexOutOfBoundsException if the index is out of bounds.
    */
   public E set(int index, E element) {
-    // TODO: Implement this method
-    return null;
+    if (size <= index || index < 0) {
+      throw new IndexOutOfBoundsException(
+          String.format("Index must be between 0 and %s but is %s", size - 1, index));
+    }
+    if (element == null) {
+      throw new NullPointerException(String.format("The element cannot be null"));
+    }
+    LLNode node = head;
+    for (int i = 0; i < index; i++) {
+      node = node.next;
+    }
+    E original_element = (E) node.data;
+    node.data = element;
+    return original_element;
   }
 }
 
